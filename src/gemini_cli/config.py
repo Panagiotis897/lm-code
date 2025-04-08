@@ -1,5 +1,5 @@
 """
-Configuration management for Gemini CLI.
+Configuration management for LM CLI.
 """
 
 import os
@@ -7,7 +7,7 @@ import yaml
 from pathlib import Path
 
 class Config:
-    """Manages configuration for the Gemini CLI application."""
+    """Manages configuration for the LM CLI application."""
     
     def __init__(self):
         self.config_dir = Path.home() / ".config" / "gemini-code"
@@ -22,7 +22,7 @@ class Config:
         if not self.config_file.exists():
             default_config = {
                 "api_keys": {},
-                "default_model": "models/gemini-2.5-pro-exp-03-25",
+                "default_model": "qwen/qwen-2.5-coder-32b-instruct:free",
                 "settings": {
                     "max_tokens": 1000000,
                     "temperature": 0.7,
