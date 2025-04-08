@@ -27,7 +27,7 @@ LM Code is a powerful AI coding assistant for your terminal, leveraging the Open
 ### Method 1: Install from PyPI (Recommended)
 
 ```bash
-pip install code-lm
+pip install lmcode
 ```
 
 ### Method 2: Install from Source
@@ -45,7 +45,7 @@ pip install -e .
 
 ## Setup
 
-Before using LM Code, you need to set up your API keys for OpenRouter (or other supported APIs).
+Before using LM Code, you need to set up your API keys for OpenRouter.
 
 ### Configure API Key
 
@@ -122,6 +122,7 @@ LM Code is under active development. Contributions, feature requests, and feedba
 - Rebranded from Gemini to LM Code.
 - Integrated OpenRouter's Qwen model as the default.
 - Added multi-model support for Qwen, DeepSeek, and Gemini.
+- Overhauled CLI commands (`gemini` → `lmcode`).
 - Enhanced configuration to support multiple API providers.
 
 ---
