@@ -1,7 +1,6 @@
 """
 Main entry point for the LM Code application.
-Targets Qwen 2.5 Coder 32B model via OpenRouter. Includes ASCII Art welcome.
-Passes console object to model.
+Targets OpenRouter and other supported models. Includes ASCII Art welcome.
 """
 
 import os
@@ -52,6 +51,16 @@ log.info(f"Logging initialized with level: {log_level}")  # Confirm level
 
 # --- Default Model ---
 DEFAULT_MODEL = "qwen/qwen-2.5-coder-32b-instruct:free"
+# --- ---
+
+# --- Supported Models ---
+SUPPORTED_MODELS = [
+    {"id": "qwen/qwen-2.5-coder-32b-instruct:free", "description": "Qwen 2.5 Coder 32B"},
+    {"id": "qwen/qwq-32b:free", "description": "Qwen QWQ 32B"},
+    {"id": "deepseek/deepseek-r1:free", "description": "DeepSeek R1"},
+    {"id": "google/gemma-3-27b-it:free", "description": "Gemma 3 27B Italian"},
+    {"id": "google/gemini-2.5-pro-exp-03-25:free", "description": "Gemini 2.5 Pro Experimental"},
+]
 # --- ---
 
 # --- ASCII Art Definition ---
@@ -112,12 +121,16 @@ def list_models():
     console.print("[yellow]Fetching models...[/yellow]")
     try:
         models_list = list_available_models(api_key)
-        if not models_list or (isinstance(models_list, list) and len(models_list) > 0 and isinstance(models_list[0], dict) and "error" in models_list[0]):
-             console.print(f"[red]Error listing models:[/red] {models_list[0].get('error', 'Unknown error') if models_list else 'No models found or fetch error.'}"); return
-        console.print("\n[bold cyan]Available Models (Access may vary):[/bold cyan]")
-        for model_data in models_list: console.print(f"- [bold green]{model_data['name']}[/bold green] (Display: {model_data.get('display_name', 'N/A')})")
-        console.print("\nUse 'lmcode --model MODEL' or 'lmcode set-default-model MODEL'.")
-    except Exception as e: console.print(f"[bold red]Error listing models:[/bold red] {e}"); log.error("List models failed", exc_info=True)
+        if not models_list:
+            console.print("[red]No models found or fetch error.[/red]")
+        else:
+            console.print("\n[bold cyan]Supported Models:[/bold cyan]")
+            for model in SUPPORTED_MODELS:
+                console.print(f"- [bold green]{model['id']}[/bold green]: {model['description']}")
+            console.print("\nUse 'lmcode --model MODEL' or 'lmcode set-default-model MODEL'.")
+    except Exception as e:
+        console.print(f"[bold red]Error listing models:[/bold red] {e}")
+        log.error("List models failed", exc_info=True)
 
 
 # --- Modified start_interactive_session to use OpenRouter ---
