@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="lmcode",  # The name of your package
+    name="code-lm",  # The name of your package
     version="0.1.0",  # Package version
     description="A CLI for interacting with various LLM models using OpenRouter and other APIs.",
     long_description=open("README.md").read(),  # Read from README.md
