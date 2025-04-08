@@ -1,6 +1,6 @@
 """
-Main entry point for the Gemini CLI application.
-Targets Gemini 2.5 Pro Experimental. Includes ASCII Art welcome.
+Main entry point for the LM Code application.
+Targets Qwen 2.5 Coder 32B model via OpenRouter. Includes ASCII Art welcome.
 Passes console object to model.
 """
 
@@ -12,17 +12,16 @@ from rich.markdown import Markdown
 from rich.panel import Panel
 from pathlib import Path
 import yaml
-import google.generativeai as genai
 import logging
 import time
 
-from .models.gemini import GeminiModel, list_available_models
+from .models.openrouter import OpenRouterModel, list_available_models
 from .config import Config
 from .utils import count_tokens
 from .tools import AVAILABLE_TOOLS
 
 # Setup console and config
-console = Console() # Create console instance HERE
+console = Console()  # Create console instance HERE
 try:
     config = Config()
 except Exception as e:
@@ -30,7 +29,7 @@ except Exception as e:
     config = None
 
 # Setup logging - MORE EXPLICIT CONFIGURATION
-log_level = os.environ.get("LOG_LEVEL", "WARNING").upper() # <-- Default back to WARNING
+log_level = os.environ.get("LOG_LEVEL", "WARNING").upper()  # <-- Default back to WARNING
 log_format = '%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s'
 
 # Get root logger and set level
@@ -42,29 +41,29 @@ for handler in root_logger.handlers[:]:
     root_logger.removeHandler(handler)
 
 # Add a stream handler to output to console
-stream_handler = logging.StreamHandler(sys.stdout) 
+stream_handler = logging.StreamHandler(sys.stdout)
 stream_handler.setLevel(log_level)
 formatter = logging.Formatter(log_format)
 stream_handler.setFormatter(formatter)
 root_logger.addHandler(stream_handler)
 
-log = logging.getLogger(__name__) # Get logger for this module
-log.info(f"Logging initialized with level: {log_level}") # Confirm level
+log = logging.getLogger(__name__)  # Get logger for this module
+log.info(f"Logging initialized with level: {log_level}")  # Confirm level
 
 # --- Default Model ---
-DEFAULT_MODEL = "gemini-2.5-pro-exp-03-25"
+DEFAULT_MODEL = "qwen/qwen-2.5-coder-32b-instruct:free"
 # --- ---
 
 # --- ASCII Art Definition ---
 LM_CODE_ART = r"""
 
 [green]
-  ██╗     ███╗   ███╗       ██████╗ ██████╗ ██████╗ ███████╗
-  ██║     ████╗ ████║      ██╔════╝██╔═══██╗██╔══██╗██╔════╝
-  ██║     ██╔████╔██║█████╗██║     ██║   ██║██║  ██║█████╗  
-  ██║     ██║╚██╔╝██║╚════╝██║     ██║   ██║██║  ██║██╔══╝  
-  ███████╗██║ ╚═╝ ██║      ╚██████╗╚██████╔╝██████╔╝███████╗
-  ╚══════╝╚═╝     ╚═╝       ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝
+  ██╗     ███╗   ███╗     ██████╗ ██████╗ ██████╗ ███████╗
+  ██║     ████╗ ████║    ██╔════╝██╔═══██╗██╔══██╗██╔════╝
+  ██║     ██╔████╔██║    ██║     ██║   ██║██║  ██║█████╗  
+  ██║     ██║╚██╔╝██║    ██║     ██║   ██║██║  ██║██╔══╝  
+  ███████╗██║ ╚═╝ ██║    ╚██████╗╚██████╔╝██████╔╝███████╗
+  ╚══════╝╚═╝     ╚═╝     ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝
 [/green]
 """
 # --- End ASCII Art ---
@@ -75,12 +74,12 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.group(invoke_without_command=True, context_settings=CONTEXT_SETTINGS)
 @click.option(
     '--model', '-m',
-    help=f'Model ID to use (e.g., gemini-2.5-pro-exp-03-25). Default: {DEFAULT_MODEL}',
+    help=f'Model ID to use (e.g., qwen/qwen-2.5-coder-32b-instruct:free). Default: {DEFAULT_MODEL}',
     default=None
 )
 @click.pass_context
 def cli(ctx, model):
-    """Interactive CLI for Gemini models with coding assistance tools."""
+    """Interactive CLI for LM models with coding assistance tools."""
     if not config:
         console.print("[bold red]Configuration could not be loaded. Cannot proceed.[/bold red]")
         sys.exit(1)
@@ -91,12 +90,11 @@ def cli(ctx, model):
         # Pass the console object to start_interactive_session
         start_interactive_session(model_name_to_use, console)
 
-# ... (setup, set_default_model, list_models functions remain the same) ...
 @cli.command()
 @click.argument('key', required=True)
 def setup(key):
     if not config: console.print("[bold red]Config error.[/bold red]"); return
-    try: config.set_api_key("google", key); console.print("[green]✓[/green] Google API key saved.")
+    try: config.set_api_key("openrouter", key); console.print("[green]✓[/green] OpenRouter API key saved.")
     except Exception as e: console.print(f"[bold red]Error saving API key:[/bold red] {e}")
 
 @cli.command()
@@ -109,8 +107,8 @@ def set_default_model(model_name):
 @cli.command()
 def list_models():
     if not config: console.print("[bold red]Config error.[/bold red]"); return
-    api_key = config.get_api_key("google")
-    if not api_key: console.print("[bold red]Error:[/bold red] API key not found. Run 'gemini setup'."); return
+    api_key = config.get_api_key("openrouter")
+    if not api_key: console.print("[bold red]Error:[/bold red] API key not found. Run 'gemini setup YOUR_OPENROUTER_API_KEY'."); return
     console.print("[yellow]Fetching models...[/yellow]")
     try:
         models_list = list_available_models(api_key)
@@ -122,9 +120,9 @@ def list_models():
     except Exception as e: console.print(f"[bold red]Error listing models:[/bold red] {e}"); log.error("List models failed", exc_info=True)
 
 
-# --- MODIFIED start_interactive_session to accept and pass console ---
+# --- Modified start_interactive_session to use OpenRouter ---
 def start_interactive_session(model_name: str, console: Console):
-    """Start an interactive chat session with the selected Gemini model."""
+    """Start an interactive chat session with the selected OpenRouter model."""
     if not config: console.print("[bold red]Config error.[/bold red]"); return
 
     # --- Display Welcome Art ---
@@ -134,16 +132,16 @@ def start_interactive_session(model_name: str, console: Console):
     time.sleep(0.1)
     # --- End Welcome Art ---
 
-    api_key = config.get_api_key("google")
+    api_key = config.get_api_key("openrouter")
     if not api_key:
-        console.print("\n[bold red]Error:[/bold red] Google API key not found.")
-        console.print("Please run [bold]'gemini setup YOUR_API_KEY'[/bold] first.")
+        console.print("\n[bold red]Error:[/bold red] OpenRouter API key not found.")
+        console.print("Please run [bold]'gemini setup YOUR_OPENROUTER_API_KEY'[/bold] first.")
         return
 
     try:
         console.print(f"\nInitializing model [bold]{model_name}[/bold]...")
-        # Pass the console object to GeminiModel constructor
-        model = GeminiModel(api_key=api_key, console=console, model_name=model_name)
+        # Pass the console object to OpenRouterModel constructor
+        model = OpenRouterModel(api_key=api_key, console=console, model_name=model_name)
         console.print("[green]Model initialized successfully.[/green]\n")
 
     except Exception as e:
@@ -157,7 +155,7 @@ def start_interactive_session(model_name: str, console: Console):
 
     while True:
         try:
-            user_input = console.input("[bold blue]You:[/bold blue] ")
+            user_input = console.input("[bold green]You:[/bold green] ")
 
             if user_input.lower() == '/exit': break
             elif user_input.lower() == '/help': show_help(); continue
@@ -168,7 +166,7 @@ def start_interactive_session(model_name: str, console: Console):
             if response_text is None and user_input.startswith('/'): console.print(f"[yellow]Unknown command:[/yellow] {user_input}"); continue
             elif response_text is None: console.print("[red]Received an empty response from the model.[/red]"); log.warning("generate() returned None unexpectedly."); continue
 
-            console.print("[bold green]LM:[/bold green]")
+            console.print("[bold green]Assistant:[/bold green]")
             console.print(Markdown(response_text), highlight=True)
 
         except KeyboardInterrupt:
