@@ -3,14 +3,14 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "gemini-code" 
-version = "0.1.106"  
+name = "code-lm"  # Updated project name
+version = "0.1.0"  # Updated version
 authors = [
-  { name="Raiza Martin", email="raiza@huxe.ai" }
+  { name="Panagiotis897", email="your.email@example.com" }
 ]
-description = "An AI coding assistant CLI using Google's Gemini models with function calling."
+description = "An AI coding assistant CLI using OpenRouter and various LLM models."
 readme = "README.md"
-requires-python = ">=3.9" # Gemini library might require newer Python
+requires-python = ">=3.9"
 license = { file = "LICENSE" }
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -22,22 +22,20 @@ classifiers = [
     "Topic :: Utilities",
 ]
 dependencies = [
-    "google-generativeai>=0.5.0", # <<< ADDED/UPDATED GEMINI LIBRARY
     "click>=8.0",              # For CLI framework
     "rich>=13.0",             # For nice terminal output
+    "requests>=2.25.0",       # For web requests
     "PyYAML>=6.0",            # For config handling
-    "tiktoken>=0.6.0",          # <-- ADDED TIKTOKEN DEPENDENCY
-    "questionary>=2.0.0",     # <-- ADDED QUESTIONARY DEPENDENCY BACK
-    # Add any other direct dependencies your tools might have (e.g., requests for web_tools)
+    "tiktoken>=0.6.0",        # Added for tokenization
+    "questionary>=2.0.0",     # Added for interactive prompts
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/raizamartin/gemini-code"
-"Bug Tracker" = "https://github.com/raizamartin/gemini-code/issues"
+"Homepage" = "https://github.com/Panagiotis897/lm-code"  # Updated URL
+"Bug Tracker" = "https://github.com/Panagiotis897/lm-code/issues"  # Updated URL
 
-# This makes the `gemini` command run the `cli` function in `main.py`
 [project.scripts]
-gemini = "gemini_cli.main:cli"
+lmcode = "gemini_cli.main:cli"  # Updated CLI command
 
 [tool.setuptools.packages.find]
 where = ["src"]  # look for packages in src/
