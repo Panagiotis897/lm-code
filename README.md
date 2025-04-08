@@ -1,153 +1,140 @@
-# Gemini Code
+# LM Code
 
-A powerful AI coding assistant for your terminal, powered by Gemini 2.5 Pro with support for other LLM models.
-More information [here](https://blossom-tarsier-434.notion.site/Gemini-Code-1c6c13716ff180db86a0c7f4b2da13ab?pvs=4)
+LM Code is a powerful AI coding assistant for your terminal, leveraging the OpenRouter API and supporting multiple LLM models like Qwen, DeepSeek, and Gemini. With LM Code, you can interactively work on coding tasks, automate file operations, and improve your workflow directly from the command line.
+
+---
 
 ## Features
 
-- Interactive chat sessions in your terminal
-- Multiple model support (Gemini 2.5 Pro, Gemini 1.5 Pro, and more)
-- Basic history management (prevents excessive length)
-- Markdown rendering in the terminal
-- Automatic tool usage by the assistant:
-  - File operations (view, edit, list, grep, glob)
-  - Directory operations (ls, tree, create_directory)
-  - System commands (bash)
-  - Quality checks (linting, formatting)
-  - Test running capabilities (pytest, etc.)
+- **Interactive CLI with AI Assistance**:
+  - Chat with AI models for coding advice, file management, and more.
+  - Markdown rendering for improved readability.
+- **Multi-Model Support**:
+  - Qwen, DeepSeek, Gemini, and more.
+- **Automated Tool Usage**:
+  - File operations: `view`, `edit`, `list`, `grep`, `glob`.
+  - Directory operations: `ls`, `tree`, `create_directory`.
+  - System commands: `bash`.
+  - Quality checks: linting, formatting.
+  - Test running: `pytest` and similar tools.
+- **Customizable Configurations**:
+  - Easily set default models and API keys.
+
+---
 
 ## Installation
 
 ### Method 1: Install from PyPI (Recommended)
 
 ```bash
-# Install directly from PyPI
-pip install gemini-code
+pip install code-lm
 ```
 
 ### Method 2: Install from Source
 
 ```bash
 # Clone the repository
-git clone https://github.com/raizamartin/gemini-code.git
-cd gemini-code
+git clone https://github.com/Panagiotis897/lm-code.git
+cd lm-code
 
 # Install the package
 pip install -e .
 ```
 
+---
+
 ## Setup
 
-Before using Gemini CLI, you need to set up your API keys:
+Before using LM Code, you need to set up your API keys for OpenRouter (or other supported APIs).
+
+### Configure API Key
 
 ```bash
-# Set up Google API key for Gemini models
-gemini setup YOUR_GOOGLE_API_KEY
+lmcode setup YOUR_OPENROUTER_API_KEY
 ```
+
+This saves your API key in the configuration file located at `~/.config/gemini-code/config.yaml`.
+
+---
 
 ## Usage
 
+### Start an Interactive Session
+
 ```bash
-# Start an interactive session with the default model
-gemini
+# Start with the default model
+lmcode
 
-# Start a session with a specific model
-gemini --model models/gemini-2.5-pro-exp-03-25
+# Start with a specific model
+lmcode --model qwen/qwen-2.5-coder-32b-instruct:free
+```
 
-# Set default model
-gemini set-default-model models/gemini-2.5-pro-exp-03-25
+### Manage Models
+
+```bash
+# Set a default model
+lmcode set-default-model deepseek/deepseek-r1:free
 
 # List all available models
-gemini list-models
+lmcode list-models
 ```
+
+---
+
+## Supported Models
+
+- **Qwen 2.5 Coder 32B**: `qwen/qwen-2.5-coder-32b-instruct:free`
+- **Qwen QWQ 32B**: `qwen/qwq-32b:free`
+- **DeepSeek R1**: `deepseek/deepseek-r1:free`
+- **Gemma 3 (27B Italian)**: `google/gemma-3-27b-it:free`
+- **Gemini 2.5 Pro Experimental**: `google/gemini-2.5-pro-exp-03-25:free`
+
+---
 
 ## Interactive Commands
 
 During an interactive session, you can use these commands:
 
-- `/exit` - Exit the chat session
-- `/help` - Display help information
+- **`/exit`**: Exit the session.
+- **`/help`**: Display help information.
+
+---
 
 ## How It Works
 
-### Tool Usage
-
-Unlike direct command-line tools, the Gemini CLI's tools are used automatically by the assistant to help answer your questions. For example:
+LM Code uses native tools to enhance your coding experience. For instance:
 
 1. You ask: "What files are in the current directory?"
-2. The assistant uses the `ls` tool behind the scenes
-3. The assistant provides you with a formatted response
+2. LM Code uses the `ls` tool to fetch directory contents.
+3. The assistant formats and presents the response.
 
-This approach makes the interaction more natural and similar to how Claude Code works.
+This seamless integration of tools and AI makes LM Code a powerful coding partner.
+
+---
 
 ## Development
 
-This project is under active development. More models and features will be added soon!
+LM Code is under active development. Contributions, feature requests, and feedback are welcome!
 
-### Recent Changes in v0.1.69
+### Recent Changes
 
-- Added test_runner tool to execute automated tests (e.g., pytest)
-- Fixed syntax issues in the tool definitions
-- Improved error handling in tool execution
-- Updated status displays during tool execution with more informative messages
-- Added additional utility tools (directory_tools, quality_tools, task_complete_tool, summarizer_tool)
+#### v0.1.0
+- Rebranded from Gemini to LM Code.
+- Integrated OpenRouter's Qwen model as the default.
+- Added multi-model support for Qwen, DeepSeek, and Gemini.
+- Enhanced configuration to support multiple API providers.
 
-### Recent Changes in v0.1.21
+---
 
-- Implemented native Gemini function calling for much more reliable tool usage
-- Rewritten the tool execution system to use Gemini's built-in function calling capability
-- Enhanced the edit tool to better handle file creation and content updating
-- Updated system prompt to encourage function calls instead of text-based tool usage
-- Fixed issues with Gemini not actively creating or modifying files
-- Simplified the BaseTool interface to support both legacy and function call modes
+## Known Issues
 
-### Recent Changes in v0.1.20
-
-- Fixed error with Flask version check in example code
-- Improved error handling in system prompt example code
-
-### Recent Changes in v0.1.19
-
-- Improved system prompt to encourage more active tool usage
-- Added thinking/planning phase to help Gemini reason about solutions
-- Enhanced response format to prioritize creating and modifying files over printing code
-- Filtered out thinking stages from final output to keep responses clean
-- Made Gemini more proactive as a coding partner, not just an advisor
-
-### Recent Changes in v0.1.18
-
-- Updated default model to Gemini 2.5 Pro Experimental (models/gemini-2.5-pro-exp-03-25)
-- Updated system prompts to reference Gemini 2.5 Pro
-- Improved model usage and documentation
-
-### Recent Changes in v0.1.17
-
-- Added `list-models` command to show all available Gemini models
-- Improved error handling for models that don't exist or require permission
-- Added model initialization test to verify model availability
-- Updated help documentation with new commands
-
-### Recent Changes in v0.1.16
-
-- Fixed file creation issues: The CLI now properly handles creating files with content
-- Enhanced tool pattern matching: Added support for more formats that Gemini might use
-- Improved edit tool handling: Better handling of missing arguments when creating files
-- Added special case for natural language edit commands (e.g., "edit filename with content: ...")
-
-### Recent Changes in v0.1.15
-
-- Fixed tool execution issues: The CLI now properly processes tool calls and executes Bash commands correctly
-- Fixed argument parsing for Bash tool: Commands are now passed as a single argument to avoid parsing issues
-- Improved error handling in tools: Better handling of failures and timeouts
-- Updated model name throughout the codebase to use `gemini-1.5-pro` consistently
-
-### Known Issues
-
-- If you created a config file with earlier versions, you may need to delete it to get the correct defaults:
+- If you used earlier versions, you might need to delete your old configuration:
   ```bash
   rm -rf ~/.config/gemini-code
   ```
 
+---
+
 ## License
 
-MIT
+MIT License
