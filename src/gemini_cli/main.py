@@ -56,16 +56,16 @@ DEFAULT_MODEL = "gemini-2.5-pro-exp-03-25"
 # --- ---
 
 # --- ASCII Art Definition ---
-GEMINI_CODE_ART = r"""
+LM_CODE_ART = r"""
 
-[medium_purple]
-  ██████╗ ███████╗███╗   ███╗██╗███╗   ██╗██╗        ██████╗  ██████╗ ██████╗ ███████╗
- ██╔════╝ ██╔════╝████╗ ████║██║████╗  ██║██║       ██╔════╝ ██╔═══██╗██╔══██╗██╔════╝
- ██║ ███╗███████╗██╔████╔██║██║██╔██╗ ██║██║       ██║      ██║   ██║██║  ██║███████╗
- ██║  ██║██╔════╝██║╚██╔╝██║██║██║╚██╗██║██║       ██║      ██║   ██║██║  ██║██╔════╝
- ╚██████╔╝███████╗██║ ╚═╝ ██║██║██║ ╚████║██║       ╚██████╗ ╚██████╔╝██████╔╝███████╗
-  ╚═════╝ ╚══════╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝        ╚═════╝  ╚═════╝ ╚═════╝ ╚══════╝
-[/medium_purple]
+[green]
+  ██╗     ███╗   ███╗       ██████╗ ██████╗ ██████╗ ███████╗
+  ██║     ████╗ ████║      ██╔════╝██╔═══██╗██╔══██╗██╔════╝
+  ██║     ██╔████╔██║█████╗██║     ██║   ██║██║  ██║█████╗  
+  ██║     ██║╚██╔╝██║╚════╝██║     ██║   ██║██║  ██║██╔══╝  
+  ███████╗██║ ╚═╝ ██║      ╚██████╗╚██████╔╝██████╔╝███████╗
+  ╚══════╝╚═╝     ╚═╝       ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝
+[/green]
 """
 # --- End ASCII Art ---
 
@@ -129,8 +129,8 @@ def start_interactive_session(model_name: str, console: Console):
 
     # --- Display Welcome Art ---
     console.clear()
-    console.print(GEMINI_CODE_ART)
-    console.print(Panel("[b]Welcome to Gemini Code AI Assistant![/b]", border_style="blue", expand=False))
+    console.print(LM_CODE_ART)
+    console.print(Panel("[b]Welcome to LM Code AI Assistant![/b]", border_style="green", expand=False))
     time.sleep(0.1)
     # --- End Welcome Art ---
 
@@ -168,7 +168,7 @@ def start_interactive_session(model_name: str, console: Console):
             if response_text is None and user_input.startswith('/'): console.print(f"[yellow]Unknown command:[/yellow] {user_input}"); continue
             elif response_text is None: console.print("[red]Received an empty response from the model.[/red]"); log.warning("generate() returned None unexpectedly."); continue
 
-            console.print("[bold medium_purple]Gemini:[/bold medium_purple]")
+            console.print("[bold green]LM:[/bold green]")
             console.print(Markdown(response_text), highlight=True)
 
         except KeyboardInterrupt:
