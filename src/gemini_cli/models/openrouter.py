@@ -67,7 +67,7 @@ class OpenRouterModel:
         self.initial_model_name = model_name
         self.current_model_name = model_name
         self.console = console
-        self.base_url = "https://openrouter.ai/api/v1/chat/completions"
+        self.base_url = "https://openrouter.ai/api/v1"
         
         self.headers = {
             "Authorization": f"Bearer {api_key}",
