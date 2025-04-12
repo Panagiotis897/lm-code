@@ -448,48 +448,56 @@ class OpenRouterModel:
 
     # --- Tool Definition Helper ---
     def _create_tool_definitions(self) -> list[FunctionDeclaration] | None:
-        """Dynamically create FunctionDeclarations from AVAILABLE_TOOLS."""
-        declarations = []
-        for tool_name, tool_instance in AVAILABLE_TOOLS.items():
-            if hasattr(tool_instance, 'get_function_declaration'):
-                declaration = tool_instance.get_function_declaration()
-                if declaration:
+    """Dynamically create FunctionDeclarations from AVAILABLE_TOOLS."""
+    declarations = []
+    for tool_name, tool_instance in AVAILABLE_TOOLS.items():
+        if hasattr(tool_instance, 'get_function_declaration'):
+            declaration = tool_instance.get_function_declaration()
+            if isinstance(declaration, dict):  # Handle unexpected dictionary type
+                if "name" in declaration and "description" in declaration:
                     schema = {
                         "type": "object",
-                        "properties": {},
-                        "required": []
+                        "properties": declaration.get("parameters", {}).get("properties", {}),
+                        "required": declaration.get("parameters", {}).get("required", [])
                     }
-                    
-                    # Convert Google's function declaration format to OpenRouter's
-                    if hasattr(declaration, 'parameters') and declaration.parameters:
-                        if hasattr(declaration.parameters, 'properties'):
-                            for prop_name, prop_details in declaration.parameters.properties.items():
-                                schema["properties"][prop_name] = {
-                                    "type": prop_details.type if hasattr(prop_details, 'type') else "string",
-                                    "description": prop_details.description if hasattr(prop_details, 'description') else ""
-                                }
-                        
-                        if hasattr(declaration.parameters, 'required') and declaration.parameters.required:
-                            schema["required"] = declaration.parameters.required
-                    
-                    # Create a new FunctionDeclaration with OpenRouter compatible schema
-                    openrouter_declaration = FunctionDeclaration(
-                        name=declaration.name,
-                        description=declaration.description if hasattr(declaration, 'description') else "",
+                    declarations.append(FunctionDeclaration(
+                        name=declaration["name"],
+                        description=declaration["description"],
                         parameters=schema
-                    )
-                    
-                    declarations.append(openrouter_declaration)
-                    log.debug(f"Generated FunctionDeclaration for tool: {tool_name}")
+                    ))
+                    log.debug(f"Generated FunctionDeclaration (dict) for tool: {tool_name}")
                 else:
-                    log.warning(f"Tool {tool_name} has 'get_function_declaration' but it returned None.")
-            else:
-                # Fallback or skip tools without the method? For now, log warning.
-                log.warning(f"Tool {tool_name} does not have a 'get_function_declaration' method. Skipping.")
-        
-        log.info(f"Created {len(declarations)} function declarations for native tool use.")
-        return declarations if declarations else None
+                    log.warning(f"Unexpected dictionary format for tool declaration: {declaration}")
+            elif declaration:  # Handle regular objects with attributes
+                schema = {
+                    "type": "object",
+                    "properties": {},
+                    "required": []
+                }
+                # Convert declaration parameters to schema
+                if hasattr(declaration, 'parameters') and declaration.parameters:
+                    if hasattr(declaration.parameters, 'properties'):
+                        for prop_name, prop_details in declaration.parameters.properties.items():
+                            schema["properties"][prop_name] = {
+                                "type": getattr(prop_details, 'type', "string"),
+                                "description": getattr(prop_details, 'description', "")
+                            }
+                    if hasattr(declaration.parameters, 'required') and declaration.parameters.required:
+                        schema["required"] = declaration.parameters.required
 
+                declarations.append(FunctionDeclaration(
+                    name=getattr(declaration, 'name', 'unknown'),
+                    description=getattr(declaration, 'description', ''),
+                    parameters=schema
+                ))
+                log.debug(f"Generated FunctionDeclaration (object) for tool: {tool_name}")
+            else:
+                log.warning(f"Tool {tool_name} has 'get_function_declaration' but it returned None.")
+        else:
+            log.warning(f"Tool {tool_name} does not have a 'get_function_declaration' method. Skipping.")
+
+    log.info(f"Created {len(declarations)} function declarations for native tool use.")
+    return declarations if declarations else None
     # --- System Prompt Helper ---
     def _create_system_prompt(self) -> str:
         """Creates the system prompt, emphasizing native functions and planning."""
