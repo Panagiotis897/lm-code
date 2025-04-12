@@ -1,25 +1,25 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="code-lm",  # The name of your package
-    version="0.1.0",  # Package version
+    name="code-lm",
+    version="0.1.3",
     description="A CLI for interacting with various LLM models using OpenRouter and other APIs.",
-    long_description=open("README.md").read(),  # Read from README.md
-    long_description_content_type="text/markdown",  # Markdown format
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
     author="Panagiotis897",
-    author_email="your.email@example.com",  # Replace with your email
-    url="https://github.com/Panagiotis897/lm-code",  # Repository URL
+    author_email="orion256business@gmail.com",
+    url="https://github.com/Panagiotis897/lm-code",
     license="MIT",  # License type
     packages=find_packages(where="src"),
-    package_dir={"": "src"},  # Source directory for the package
-    include_package_data=True,  # Include files listed in MANIFEST.in
+    package_dir={"": "src"},
+    include_package_data=True,
     entry_points={
         "console_scripts": [
-            "lmcode=gemini_cli.main:cli",  # Maps 'lmcode' command to the 'cli' function in main.py
+            "lmcode=gemini_cli.main:cli",
         ]
     },
     install_requires=[
-        "click",  # Add required dependencies
+        "click",
         "rich",
         "requests",
         "pyyaml",
