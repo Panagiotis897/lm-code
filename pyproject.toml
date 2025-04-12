@@ -3,10 +3,10 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "code-lm"  # Updated project name
-version = "0.1.0"  # Updated version
+name = "code-lm"
+version = "0.1.3"
 authors = [
-  { name="Panagiotis897", email="your.email@example.com" }
+  { name="Panagiotis897", email="orion256business@gmail.com" }
 ]
 description = "An AI coding assistant CLI using OpenRouter and various LLM models."
 readme = "README.md"
@@ -22,20 +22,20 @@ classifiers = [
     "Topic :: Utilities",
 ]
 dependencies = [
-    "click>=8.0",              # For CLI framework
-    "rich>=13.0",             # For nice terminal output
-    "requests>=2.25.0",       # For web requests
-    "PyYAML>=6.0",            # For config handling
-    "tiktoken>=0.6.0",        # Added for tokenization
-    "questionary>=2.0.0",     # Added for interactive prompts
+    "click>=8.0",
+    "rich>=13.0",
+    "requests>=2.25.0",
+    "PyYAML>=6.0",
+    "tiktoken>=0.6.0",
+    "questionary>=2.0.0",
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/Panagiotis897/lm-code"  # Updated URL
-"Bug Tracker" = "https://github.com/Panagiotis897/lm-code/issues"  # Updated URL
+"Homepage" = "https://github.com/Panagiotis897/lm-code"
+"Bug Tracker" = "https://github.com/Panagiotis897/lm-code/issues"
 
 [project.scripts]
-lmcode = "gemini_cli.main:cli"  # Updated CLI command
+lmcode = "gemini_cli.main:cli"
 
 [tool.setuptools.packages.find]
-where = ["src"]  # look for packages in src/
+where = ["src"]
