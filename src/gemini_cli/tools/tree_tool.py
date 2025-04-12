@@ -3,7 +3,6 @@ Tool for displaying directory structure using the 'tree' command.
 """
 import subprocess
 import logging
-from google.generativeai.types import FunctionDeclaration, Tool
 
 from .base import BaseTool
 
