@@ -1,6 +1,6 @@
 # LM Code
 
-LM Code is a powerful AI coding assistant for your terminal, leveraging the OpenRouter API and supporting multiple LLM models like Qwen, DeepSeek, and Gemini. With LM Code, you can interactively work on coding tasks, automate file operations, and improve your workflow directly from the command line.
+LM Code is a powerful AI coding assistant for your terminal supporting multiple LLM models like Qwen, DeepSeek, and Gemini. With LM Code, you can interactively work on coding tasks, automate file operations, and improve your workflow directly from the command line.
 
 ---
 
