@@ -17,13 +17,13 @@ git init
 git add .
 
 # Make initial commit
-git commit -m "Initial commit of Gemini Code"
+git commit -m "Initial commit of lmcode"
 
 # Rename master branch to main
 git branch -M main
 
 # Add remote
-git remote add origin https://github.com/raizamartin/gemini-code.git
+git remote add origin https://github.com/Panagiotis897/lm-code.git
 
 # Push to GitHub
 echo -e "${YELLOW}Pushing to GitHub...${RESET}"
@@ -37,4 +37,4 @@ echo -e "   pip install --upgrade build twine"
 echo -e "   python -m build"
 echo -e "   python -m twine upload dist/*"
 echo -e "2. ${YELLOW}Create a release on GitHub:${RESET}"
-echo -e "   Visit: https://github.com/raizamartin/gemini-code/releases/new"
+echo -e "   Visit: https://github.com/Panagiotis897/lm-code/releases/new"
