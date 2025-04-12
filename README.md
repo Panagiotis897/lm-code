@@ -27,7 +27,7 @@ LM Code is a powerful AI coding assistant for your terminal, leveraging the Open
 ### Method 1: Install from PyPI (Recommended)
 
 ```bash
-pip install lmcode
+pip install code-lm
 ```
 
 ### Method 2: Install from Source
