@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="code-lm",
-    version="0.2.2",
+    version="0.2.3",
     description="A CLI for interacting with various LLM models using OpenRouter and other APIs.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
