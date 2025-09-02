@@ -57,9 +57,10 @@ DEFAULT_MODEL = "qwen/qwen-2.5-coder-32b-instruct:free"
 SUPPORTED_MODELS = [
     {"id": "qwen/qwen-2.5-coder-32b-instruct:free", "description": "Qwen 2.5 Coder 32B"},
     {"id": "qwen/qwq-32b:free", "description": "Qwen QWQ 32B"},
-    {"id": "deepseek/deepseek-r1:free", "description": "DeepSeek R1"},
+    {"id": "deepseek/deepseek-r1-0528:free", "description": "DeepSeek R1"},
     {"id": "google/gemma-3-27b-it:free", "description": "Gemma 3 27B Italian"},
-    {"id": "google/gemini-2.5-pro-exp-03-25:free", "description": "Gemini 2.5 Pro Experimental"},
+    {"id": "qwen/qwen3-coder:free", "description": "Qwen 3 Coder"},
+    {"id": "deepseek/deepseek-chat-v3.1:free", "description": "DeepSeek V3.1"},
 ]
 # --- ---
 
