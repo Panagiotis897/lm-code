@@ -85,9 +85,10 @@ lmcode list-models
 
 - **Qwen 2.5 Coder 32B**: `qwen/qwen-2.5-coder-32b-instruct:free`
 - **Qwen QWQ 32B**: `qwen/qwq-32b:free`
-- **DeepSeek R1**: `deepseek/deepseek-r1:free`
+- **DeepSeek R1**: `deepseek/deepseek-r1-0528:free`
 - **Gemma 3 (27B Italian)**: `google/gemma-3-27b-it:free`
-- **Gemini 2.5 Pro Experimental**: `google/gemini-2.5-pro-exp-03-25:free`
+- **Qwen 3 Coder**: `qwen/qwen3-coder:free`
+- **DeepSeek V3.1**: `deepseek/deepseek-chat-v3.1:free`
 
 ---
 
