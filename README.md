@@ -123,7 +123,12 @@ LM Code is under active development. Contributions, feature requests, and feedba
 - Integrated OpenRouter's Qwen model as the default.
 - Added multi-model support for Qwen, DeepSeek, and Gemini.
 - Overhauled CLI commands (`gemini` → `lmcode`).
-- Enhanced configuration to support multiple API providers.
+
+#### v0.2.5
+- Added some more models to the model list.
+- Fixed some crucial bugs over the previous versions.
+- Removed Gemini models as of now.
+- Updated some models to use their latest versions instead of the outdated ones.
 
 ---
 
@@ -131,7 +136,7 @@ LM Code is under active development. Contributions, feature requests, and feedba
 - Pricing will be introduced along with apropriate rate limits.
 - More models will be introduced along with non-free ones.
 - MCP Server intergration will be added as well.
-- More providers coming soon.
+- More providers are coming soon.
 
 ## Known Issues
 
