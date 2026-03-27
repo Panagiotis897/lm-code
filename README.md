@@ -128,7 +128,7 @@ LM Code is under active development. Contributions, feature requests, and feedba
 #### v0.3.0
 - Updated default model to NVIDIA Nemotron 3 Super 120B.
 - Added 17 free models from OpenRouter (previously 6).
-- Fixed `ModuleNotFoundError: No module named 'gemini_cli'` from stale entry point.
+- Fixed `ModuleNotFoundError: No module named 'gemini_cli'` from stale entry point after package rename.
 - Fixed `UnicodeDecodeError` on Windows (cp1253) for all subprocess commands.
 - Fixed API URL (`/chat/completions` was missing) causing HTML response errors.
 - Improved API error handling for empty/invalid responses.
@@ -140,14 +140,14 @@ LM Code is under active development. Contributions, feature requests, and feedba
 #### v0.2.5
 - Added more models to the model list.
 - Fixed crucial bugs from previous versions.
-- Removed Gemini models.
+- Removed legacy Gemini module.
 - Updated models to latest versions.
 
 #### v0.1.0
-- Rebranded from Gemini to LM Code.
+- Rebranded to LM Code.
 - Integrated OpenRouter as the default provider.
 - Added multi-model support.
-- Overhauled CLI commands (`gemini` -> `lmcode`).
+- Overhauled CLI commands.
 
 ---
 

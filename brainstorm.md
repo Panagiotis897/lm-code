@@ -1,7 +1,7 @@
 # LLM CLI Tool Brainstorm
 
 ## Core Concept
-A CLI tool that provides Claude Code-like capabilities but with the flexibility to switch between different LLM models (Claude, GPT, Gemini). This tool will be publishable as a package for others to easily install and use.
+A CLI tool that provides Claude Code-like capabilities but with the flexibility to switch between different LLM models via OpenRouter. This tool will be publishable as a package for others to easily install and use.
 
 ## Architecture
 
@@ -23,7 +23,7 @@ A CLI tool that provides Claude Code-like capabilities but with the flexibility 
 ### Model Selection
 ```
 # Set default model
-$ llm config set-default-model gemini-2.5-pro
+$ llm config set-default-model qwen/qwen3-coder:free
 
 # Use specific model for current session
 $ llm --model gpt-o1 
@@ -41,7 +41,7 @@ $ llm config add-api-key google GOOGLE_API_KEY
 - Ability to export/import sessions
 - Session isolation for different projects
 - Context management with `/compact` command:
-  - Warns when approaching token limits (e.g., Gemini 2.5 Pro's 1M context)
+  - Warns when approaching token limits
   - Generates conversation summary on demand
   - Carries summary forward to new context window
   - Allows for theoretically infinite conversation length
@@ -52,7 +52,7 @@ $ llm config add-api-key google GOOGLE_API_KEY
 - Handle token limits per model
 - Account for different capabilities (code generation, tools, etc.)
 - Normalize response formats for consistent UX
-- **Model-specific Tool Implementation** - Hardcode specific tool sets for OpenAI and Gemini initially
+- **Model-specific Tool Implementation** - Hardcode specific tool sets per provider initially
 
 ### Authentication
 - Secure storage of API keys
@@ -66,7 +66,7 @@ $ llm config add-api-key google GOOGLE_API_KEY
 ## Implementation Plan
 
 1. Start with basic CLI framework (Click, Typer, or similar)
-2. Implement Gemini 2.5 Pro integration first:
+2. Implement OpenRouter integration first:
    - Basic conversation capability
    - Token tracking and context management
    - `/compact` command implementation
