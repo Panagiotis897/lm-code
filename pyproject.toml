@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "code-lm"
-version = "0.2.5"
+version = "0.3.0"
 authors = [
   { name="Panagiotis897", email="orion256business@gmail.com" }
 ]
@@ -35,7 +35,7 @@ dependencies = [
 "Bug Tracker" = "https://github.com/Panagiotis897/lm-code/issues"
 
 [project.scripts]
-lmcode = "gemini_cli.main:cli"
+lmcode = "lm_code.main:cli"
 
 [tool.setuptools.packages.find]
 where = ["src"]

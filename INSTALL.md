@@ -30,7 +30,7 @@ Before using LM Code, you need to set up your OpenRouter API key:
 lmcode setup YOUR_OPENROUTER_API_KEY
 ```
 
-Your API key is stored securely in `~/.config/gemini-code/config.yaml`.
+Your API key is stored securely in `~/.config/lm-code/config.yaml`.
 
 ---
 
@@ -69,7 +69,7 @@ lmcode set-default-model deepseek/deepseek-r1:free
 
 If you encounter issues:
 
-1. Verify your API key is correct: `cat ~/.config/gemini-code/config.yaml`
+1. Verify your API key is correct: `cat ~/.config/lm-code/config.yaml`
 2. Ensure you have a working internet connection.
 3. Check that you have Python 3.7+ installed: `python --version`.
 4. Make sure the required packages are installed: `pip list | grep code-lm`.

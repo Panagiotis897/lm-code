@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="code-lm",
-    version="0.2.5",
+    version="0.3.0",
     description="A CLI for interacting with various LLM models using OpenRouter and other APIs.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
@@ -15,7 +15,7 @@ setup(
     include_package_data=True,
     entry_points={
         "console_scripts": [
-            "lmcode=gemini_cli.main:cli",
+            "lmcode=lm_code.main:cli",
         ]
     },
     install_requires=[
