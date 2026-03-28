@@ -152,8 +152,6 @@ LM Code is under active development. Contributions, feature requests, and feedba
 ---
 
 ## Future Plans
-
-- Pricing with appropriate rate limits.
 - Non-free model support.
 - MCP Server integration.
 - Additional providers.
